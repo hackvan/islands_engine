@@ -1,5 +1,4 @@
 defmodule IslandsEngine.Guesses do
-  alias __MODULE__
   alias IslandsEngine.{Coordinate, Guesses}
 
   @enforce_keys [:hits, :misses]
