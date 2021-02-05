@@ -5,12 +5,26 @@ defmodule IslandsEngine.Rules do
             player1: :islands_not_set,
             player2: :islands_not_set
 
+  @spec new :: %IslandsEngine.Rules{
+          player1: :islands_not_set,
+          player2: :islands_not_set,
+          state: :initialized
+        }
   def new(), do: %Rules{}
 
-  def check(%Rules{state: :initialized} = rules, :add_player), do:
-    {:ok, %Rules{rules | state: :player_set}}
 
-  def check(%Rules{state: :player_set} = rules, {:position_islands, player}) do
+  @spec check(any, any) ::
+          :error
+          | {:ok,
+             %{
+               :__struct__ => IslandsEngine.Rules | :islands_set,
+               :state => :game_over | :islands_set | :player1_turn | :player2_turn | :players_set,
+               optional(any) => any
+             }}
+  def check(%Rules{state: :initialized} = rules, :add_player), do:
+    {:ok, %Rules{rules | state: :players_set}}
+
+  def check(%Rules{state: :players_set} = rules, {:position_islands, player}) do
     case Map.fetch!(rules, player) do
       :islands_set -> :error
       :islands_not_set -> {:ok, rules}
