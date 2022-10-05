@@ -6,7 +6,6 @@ defmodule IslandsEngine.Game do
   @timeout 60 * 60 * 24 * 1000
   @players [:player1, :player2]
 
-
   @spec init(any) ::
           {:ok,
            %{

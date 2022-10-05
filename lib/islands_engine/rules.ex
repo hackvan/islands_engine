@@ -12,15 +12,7 @@ defmodule IslandsEngine.Rules do
         }
   def new(), do: %Rules{}
 
-
-  @spec check(any, any) ::
-          :error
-          | {:ok,
-             %{
-               :__struct__ => IslandsEngine.Rules | :islands_set,
-               :state => :game_over | :islands_set | :player1_turn | :player2_turn | :players_set,
-               optional(any) => any
-             }}
+  @spec check(%Rules{}, atom()) :: :error | {:ok, %Rules{}}
   def check(%Rules{state: :initialized} = rules, :add_player), do:
     {:ok, %Rules{rules | state: :players_set}}
 
